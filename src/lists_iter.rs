@@ -16,7 +16,14 @@ impl <T: Clone> std::iter::Iterator for MyIterator<T> {
     type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
-        None
+        match &self.head {
+            None => None,
+            Some(node) => {
+                let val = node.get_val().clone();
+                self.head = node.get_next();
+                Some(val)
+            }
+        }
     }
 }
 
