@@ -1,4 +1,5 @@
 use std::{rc::Rc};
+use crate::node::Node;
 
 pub struct MyStack<T: Clone> {
     tail: Option<Rc<Node<T>>>,
@@ -16,7 +17,7 @@ impl<T: Clone> MyStack<T> {
             },
             Some(ref mut node) => {
                 let mut new_node = Node::new(val);
-                new_node.next = Some(Rc::clone(node));
+                new_node.set_next(Rc::clone(node));
                 self.tail = Some(Rc::new(new_node));
             },
         }
@@ -28,24 +29,12 @@ impl<T: Clone> MyStack<T> {
         }
         let binding = self.tail.take();
         let node = binding.as_ref().unwrap();
-        self.tail = match &node.next {
+        self.tail = match node.get_next() {
             None => None,
             Some(node) => Some(Rc::clone(&node)),
         };
         
-        return Some(node.val.clone());
-    }
-}
-
-// Node for MyStack
-struct Node<T: Clone> {
-    val: T,
-    next: Option<Rc<Node<T>>>,
-}
-
-impl<T: Clone> Node<T> {
-    fn new(val: T) -> Node<T> {
-        Node {val: val, next: None}
+        return Some(node.get_val().clone());
     }
 }
 
