@@ -10,6 +10,10 @@ impl<T: Clone> Node<T> {
         Node {val: val, next: None}
     }
 
+    pub fn new_with_next(val: T, next: Rc<Node<T>>) -> Node<T> {
+        Node {val: val, next: Some(next)}
+    }
+
     pub fn set_next(&mut self, next: Rc<Node<T>>) {
         self.next = Some(next);
     }
