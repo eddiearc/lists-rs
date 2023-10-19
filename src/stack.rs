@@ -48,3 +48,23 @@ impl<T: Clone> Node<T> {
         Node {val: val, next: None}
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::MyStack;
+
+    #[test]
+    fn test_stack() {
+        let mut stack = MyStack::new();
+        assert_eq!(stack.pop(), None);
+        assert_eq!(stack.pop(), None);
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        assert_eq!(stack.pop(), Some(3));
+        assert_eq!(stack.pop(), Some(2));
+        assert_eq!(stack.pop(), Some(1));
+        assert_eq!(stack.pop(), None);
+        assert_eq!(stack.pop(), None);
+    }
+}
